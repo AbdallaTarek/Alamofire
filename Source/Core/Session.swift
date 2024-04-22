@@ -1348,3 +1348,20 @@ extension Session: SessionStateProvider {
         requestTaskMap.requests.forEach { $0.finish(error: AFError.sessionInvalidated(error: error)) }
     }
 }
+
+extension Session {
+    public func upload(multipartFormData: @escaping ( inout MultipartFormData) -> Void,
+                     with request: URLRequestConvertible,
+                     usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold,
+                     interceptor: RequestInterceptor? = nil,
+                     fileManager: FileManager = .default) -> UploadRequest {
+        var formData = MultipartFormData(fileManager: fileManager)
+        multipartFormData(&formData)
+
+        return upload(multipartFormData: formData,
+                      with: request,
+                      usingThreshold: encodingMemoryThreshold,
+                      interceptor: interceptor,
+                      fileManager: fileManager)
+    }
+}
