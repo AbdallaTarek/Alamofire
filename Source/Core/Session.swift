@@ -1350,7 +1350,7 @@ extension Session: SessionStateProvider {
 }
 
 extension Session {
-    public func upload(multipartFormData: @escaping ( inout MultipartFormData) -> Void,
+    public func uploadWithCustomMultipartFormData(multipartFormData: @escaping ( inout MultipartFormData) -> Void,
                      with request: URLRequestConvertible,
                      usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold,
                      interceptor: RequestInterceptor? = nil,
